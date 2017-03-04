@@ -1,6 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -45,14 +46,45 @@ public class MainActivity extends AppCompatActivity {
 
     public void tellJoke(View view) {
         /*
-        //uncomment to pass jokes to Button
+        //pass jokes to Button + Toast message (STEP 1)
         Toast.makeText(this, JokeEngine.tellJoke(), Toast.LENGTH_LONG).show();
         */
 
+        /*
+        //pass joke to android library display (STEP 2)
         Intent intent = new Intent(this, JokeActivity.class);
-        intent.putExtra(getString(R.string.joke_tag), JokeEngine.tellJoke());
+        intent.putExtra(getString(R.string.joke_tag), joke);
+        startActivity(intent);
+        */
+
+        EndpointsAsyncTask jokeTask = new EndpointsAsyncTask();
+        jokeTask.execute();
+      }
+
+    public void setAndDisplayJoke(String result){
+        joke = result;
+
+        Intent intent = new Intent(this, JokeActivity.class);
+        intent.putExtra(getString(R.string.joke_tag), joke);
         startActivity(intent);
     }
 
+
+    class EndpointsAsyncTask extends AsyncTask<Void, Void, String>{
+
+        @Override
+        protected String doInBackground(Void... params) {
+            return JokeEngine.tellJoke();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            setAndDisplayJoke(result);
+        }
+
+
+    }
 
 }
