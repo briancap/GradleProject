@@ -1,22 +1,25 @@
 package com.udacity.gradle.builditbigger.testing;
 
-import android.support.test.runner.AndroidJUnit4;
+import android.test.AndroidTestCase;
+import android.util.Log;
 
+import com.udacity.gradle.builditbigger.EndpointAsyncTask;
 
-import com.udacity.gradle.builditbigger.MainActivity;
+public class asyncTaskTest extends AndroidTestCase{
+    private String LOG_TAG = getClass().getSimpleName();
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import static junit.framework.Assert.assertNotNull;
-
-@RunWith(AndroidJUnit4.class)
-public class asyncTaskTest{
-
-    @Test
     public void testVerifyEchoResponse() {
-        String notNUll = "not null";
-        assertNotNull(notNUll);
+        String hopefullyNotNull = null;
+        EndpointAsyncTask endpointAsyncTask = new EndpointAsyncTask(getContext());
+        endpointAsyncTask.execute();
+
+        try {
+            hopefullyNotNull = endpointAsyncTask.get();
+        } catch (Exception e) {
+            Log.e(LOG_TAG, e.toString());
+        }
+
+        assertNotNull(hopefullyNotNull);
     }
 
 }
