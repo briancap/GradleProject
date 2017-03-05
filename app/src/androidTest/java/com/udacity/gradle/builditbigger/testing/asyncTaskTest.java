@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.udacity.gradle.builditbigger.EndpointAsyncTask;
 
-public class asyncTaskTest extends AndroidTestCase{
+public class asyncTaskTest extends AndroidTestCase{ //alternative for AndroidTestCase? need this for getContext call
     private String LOG_TAG = getClass().getSimpleName();
 
     public void testVerifyEchoResponse() {
