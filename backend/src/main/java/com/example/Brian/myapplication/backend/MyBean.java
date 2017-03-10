@@ -19,6 +19,7 @@ public class MyBean {
         myData = data;
     }
 
+
     public String getJoke(){
         return joke;
     }
